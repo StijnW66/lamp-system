@@ -41,7 +41,6 @@ def connect(query='SELECT * FROM rgb_values'):
     finally:
         if conn is not None:
             conn.close()
-            print('Database connection closed.')
             return output
 
 def convert_to_rgb(output):
@@ -64,8 +63,3 @@ def update_rgb_values(red=0, green=0, blue=0, rgb_id=1):
     output = connect(query)
 
     return convert_to_rgb(output)
-# run this file to test the functionality.
-if __name__ == '__main__':
-    rgb = update_rgb_values(10, 5, 100)
-    print(rgb)
-    get_rgb_values()
