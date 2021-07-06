@@ -2,7 +2,7 @@ from gpiozero import PWMLED
 from time import sleep
 
 
-from led_control.led_control import set_value
+from pi.led_control.led_control import set_value
 from database_connection.database_connection import get_rgb_values
 
 red_led = PWMLED(4)
