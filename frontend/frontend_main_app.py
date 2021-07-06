@@ -13,7 +13,7 @@ def create_red_frame(root):
     red_frame = tk.Frame(root, bg='#ff0000', width=213, height=400)
     red_frame.grid(row=1, column=0)
 
-    red_frame.grid_propagate(False)
+    red_frame.grid_propagate(False)a
 
     increase_red_btn = tk.Button(red_frame, text='+10', width=15, bg='#ff2626', command=lambda: [update_values(0, 10)])
     increase_red_btn.grid(row=0, column=0, pady=70, padx=50)
