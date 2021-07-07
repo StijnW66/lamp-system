@@ -5,7 +5,9 @@ import sys
 sys.path.append('.')
 
 from pi.led_control.led_control import set_value
-from database_connection.database_connection import get_rgb_values
+from database_connection.database_connection import DataBase
+
+database = DataBase()
 
 red_led = PWMLED(4)
 green_led = PWMLED(17)
@@ -14,7 +16,7 @@ green_led = PWMLED(17)
 leds = [red_led, green_led]
 
 def update_leds():
-	rgb = get_rgb_values()
+	rgb = database.get_rgb_values()
 	print(rgb)
 	for i in range(2):
 		set_value(leds[i], rgb[i]/100)

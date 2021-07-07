@@ -1,5 +1,7 @@
 import psycopg2
 from configparser import ConfigParser
+import time
+
 
 def config(filename='database_connection/database.ini', section='postgresql'):
     # create a parser
@@ -18,30 +20,42 @@ def config(filename='database_connection/database.ini', section='postgresql'):
 
     return db
 
-def connect(query='SELECT * FROM rgb_values'):
-    """ Connect to the PostgreSQL database server """
-    conn = None
-    try:
-        # read connection parameters
-        params = config()
+def setup_connection():
+    # read connection parameters
+    params = config()
 
-        # connect to the PostgreSQL server
-        conn = psycopg2.connect(**params)
-        cur = conn.cursor()
+    # connect to the PostgreSQL server
+    connection = psycopg2.connect(**params)
+    return connection
 
-	    # execute a statement
+class DataBase():
+
+    def __init__(self):
+        self.connection = setup_connection()
+
+
+    def execute_query(self, query):
+        cur = self.connection.cursor()
+
         cur.execute(query)
         output = cur.fetchall()
 
-	    # close the communication with the PostgreSQL
-        conn.commit()
+        self.connection.commit()
         cur.close()
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-    finally:
-        if conn is not None:
-            conn.close()
-            return output
+
+        return output
+
+    def get_rgb_values(self, rgb_id=1):
+        query = 'SELECT * FROM rgb_values WHERE rgb_id = {}'.format(rgb_id)
+        output = self.execute_query(query)
+
+        return convert_to_rgb(output)
+
+    def update_rgb_values(self, red=0, green=0, blue=0, rgb_id=1):
+        query = 'UPDATE rgb_values SET red = {}, green = {}, blue = {} WHERE rgb_id = {} RETURNING *'.format(red, green, blue, rgb_id)
+        output = self.execute_query(query)
+
+        return convert_to_rgb(output)
 
 def convert_to_rgb(output):
     rgb = []
@@ -50,16 +64,3 @@ def convert_to_rgb(output):
     rgb.append(output[0][3])
 
     return rgb
-
-
-def get_rgb_values(rgb_id=1):
-    query = 'SELECT * FROM rgb_values WHERE rgb_id = {}'.format(rgb_id)
-    output = connect(query)
-
-    return convert_to_rgb(output)
-
-def update_rgb_values(red=0, green=0, blue=0, rgb_id=1):
-    query = 'UPDATE rgb_values SET red = {}, green = {}, blue = {} WHERE rgb_id = {} RETURNING *'.format(red, green, blue, rgb_id)
-    output = connect(query)
-
-    return convert_to_rgb(output)

@@ -4,24 +4,28 @@ import time
 import threading
 
 sys.path.append('.')
-from database_connection.database_connection import update_rgb_values, get_rgb_values
+from database_connection.database_connection import DataBase
 
-rgb = get_rgb_values()
+database = DataBase()
+
+rgb = database.get_rgb_values()
 
 def update_loop():
     global rgb
     i = 0
     while True:
-        rgb = get_rgb_values()
+        rgb = database.get_rgb_values()
         update_text_labels()
         print('updated', i)
-        #time.sleep(5)
+        time.sleep(1)
         i+=1
 
 def update_values(color, adjustment):
+    global rgb
     rgb[color] = 100 if (rgb[color] + adjustment > 100) else 0 if (rgb[color] + adjustment < 0) else rgb[color] + adjustment
+    rgb = database.update_rgb_values(rgb[0], rgb[1], rgb[2])
     update_text_labels()
-    update_rgb_values(rgb[0], rgb[1], rgb[2])
+
 
 def update_text_labels():
     red_text.set('current value: {}'.format(rgb[0]))
@@ -98,9 +102,6 @@ create_blue_frame(root, blue_text)
 root.grid_rowconfigure(1, weight=1)
 root.grid_columnconfigure(0, weight=1)
 
-
-
-#update_text_labels()
 
 update_thread = threading.Thread(target=update_loop, daemon=True)
 update_thread.start()
