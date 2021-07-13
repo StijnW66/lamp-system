@@ -1,4 +1,5 @@
 import tkinter as tk
+import math
 import sys
 import time
 import threading
@@ -28,6 +29,9 @@ def update_values(color, adjustment):
 
 
 def update_text_labels():
+    scaled_rgb = [math.ceil(element * 2.55) for element in rgb]
+    print(scaled_rgb)
+    text_frame.configure(bg = "#%02x%02x%02x" % tuple(scaled_rgb))
     red_text.set('current value: {}'.format(rgb[0]))
     green_text.set('current value: {}'.format(rgb[1]))
     blue_text.set('current value: {}'.format(rgb[2]))
@@ -81,14 +85,12 @@ def create_blue_frame(root, str_var):
 
 root = tk.Tk()
 root.geometry("639x480")
+root.resizable(0,0)
 
 
 text_frame = tk.Frame(root, bg='#ffffff', width=639, height=80)
 text_frame.pack_propagate(False)
 text_frame.grid(row=0, column=0, columnspan=3)
-
-text_label = tk.Label(text_frame, text='Set color values', bg='#ffffff', pady=20)
-text_label.pack()
 
 red_text = tk.StringVar()
 green_text = tk.StringVar()
