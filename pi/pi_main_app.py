@@ -11,14 +11,14 @@ database = DataBase()
 
 red_led = PWMLED(4)
 green_led = PWMLED(17)
-#blue_led =
+blue_led = PWMLED(27)
 
-leds = [red_led, green_led]
+leds = [red_led, green_led, blue_led]
 
 def update_leds():
 	rgb = database.get_rgb_values()
 	print(rgb)
-	for i in range(2):
+	for i in range(3):
 		set_value(leds[i], rgb[i]/100)
 
 while True:
