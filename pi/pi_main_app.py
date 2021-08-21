@@ -1,25 +1,26 @@
 from gpiozero import PWMLED
 from time import sleep
 import sys
+import threading
 
 sys.path.append('.')
 
-from pi.led_control.led_control import set_value
+from pi.led_control.led_control import set_rgb
 from database_connection.database_connection import DataBase
+from pi.led_control.pattern_control import PatternThread
 
 database = DataBase()
-
-red_led = PWMLED(4)
-green_led = PWMLED(17)
-blue_led = PWMLED(27)
-
-leds = [red_led, green_led, blue_led]
+pattern = PatternThread()
 
 def update_leds():
 	rgb = database.get_rgb_values()
-	print(rgb)
-	for i in range(3):
-		set_value(leds[i], rgb[i]/100)
+	print("values from database:", rgb)
+	if (rgb == [0, 0, 0]):
+		if threading.active_count() < 2:
+			pattern.start_pattern()
+	else:
+		pattern.stop_pattern()
+		set_rgb(rgb)
 
 while True:
 
