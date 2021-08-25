@@ -12,6 +12,6 @@ def set_value(led, value):
 		led.value = value
 
 def set_rgb(rgb):
-	print(rgb)
+	#print(rgb)
 	for i in range(3):
 		set_value(leds[i], rgb[i]/100)

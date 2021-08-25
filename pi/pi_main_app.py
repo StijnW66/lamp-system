@@ -14,7 +14,7 @@ pattern = PatternThread()
 
 def update_leds():
 	rgb = database.get_rgb_values()
-	print("values from database:", rgb)
+	#print("values from database:", rgb)
 	if (rgb == [0, 0, 0]):
 		if threading.active_count() < 2:
 			pattern.start_pattern()
