@@ -27,6 +27,7 @@ class PatternThread:
 		if self.thread is not None:
 			self.stop_flag = True
 			self.thread.join()
+			self.thread = None
 			print("new thread stopped")
 
 	def advance_pattern(self, pattern=0, interpolate_duration=10):
