@@ -11,6 +11,10 @@ from pi.led_control.led_control import set_rgb
 from database_connection.database_connection import DataBase
 from pi.led_control.pattern_control import PatternThread
 
+# Start a pattern while not connected to the database.
+pattern = PatternThread()
+pattern.start_pattern()
+
 # Try to connect to database. Timeout after 200 attempts.
 database = None
 attempt_counter = 0
@@ -27,8 +31,6 @@ while database is None:
 print("connected", attempt_counter)
 sys.stdout.flush()
 
-# Setup pattern object
-pattern = PatternThread()
 
 def update_leds():
 	rgb = database.get_rgb_values()
