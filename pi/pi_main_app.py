@@ -5,11 +5,27 @@ import threading
 
 sys.path.append('.')
 
+print("running")
+
 from pi.led_control.led_control import set_rgb
 from database_connection.database_connection import DataBase
 from pi.led_control.pattern_control import PatternThread
 
-database = DataBase()
+database = None
+attempt_counter = 0
+
+while database is None:
+	try:
+		database = DataBase()
+	except:
+		if attempt_counter == 200:
+			exit()
+		database = None
+		attempt_counter += 1
+
+print("connected", attempt_counter)
+sys.stdout.flush()
+
 pattern = PatternThread()
 
 def update_leds():
