@@ -1,3 +1,3 @@
 *.pyc
 /__pycache__
-/pi/led_control/led_numbers.txt
+pi/led_control/led_numbers.txt
