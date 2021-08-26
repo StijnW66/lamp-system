@@ -1,6 +1,7 @@
 from gpiozero import PWMLED
 from time import sleep
 
+# Initialize LED pins from file
 f = open("pi/led_control/led_numbers.txt", "r")
 
 red_led = PWMLED(int(f.readline())) #13-S 4-T
