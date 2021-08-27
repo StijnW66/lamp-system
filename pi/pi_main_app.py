@@ -2,9 +2,13 @@ from gpiozero import PWMLED
 from time import sleep
 import sys
 import threading
+from datetime import datetime
 
 sys.path.append('.')
 
+now = datetime.now()
+
+print("time =", now.strftime("%d/%m/%Y %H:%M:%S"))
 print("running")
 
 from pi.led_control.led_control import set_rgb

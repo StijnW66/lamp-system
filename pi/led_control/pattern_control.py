@@ -41,7 +41,7 @@ class PatternThread:
 			set_rgb(rgb)
 
 			counter = (counter + 1) % (interpolate_duration *len(rainbow))
-			sleep(0.1)
+			sleep(0.15)
 
 
 def interpolate_color(rgb_start, rgb_target, progress):
