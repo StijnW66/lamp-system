@@ -30,6 +30,7 @@ while database is None:
 		if attempt_counter == 200:
 			exit()
 		database = None
+		sleep(1)
 		attempt_counter += 1
 
 print("connected", attempt_counter)
