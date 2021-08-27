@@ -30,18 +30,18 @@ class PatternThread:
 			self.thread = None
 			print("new thread stopped")
 
-	def advance_pattern(self, pattern=0, interpolate_duration=10):
+	def advance_pattern(self, pattern=0, interpolate_duration=50):
 		counter = 0
 		while not self.stop_flag:
 			index = math.floor(counter / interpolate_duration)
 			next_index = (index + 1) % len(rainbow)
-			progress = (counter % interpolate_duration) * interpolate_duration
+			progress = (counter % interpolate_duration) * (100/interpolate_duration)
 
 			rgb = interpolate_color(rainbow[index], rainbow[next_index], progress)
 			set_rgb(rgb)
 
 			counter = (counter + 1) % (interpolate_duration *len(rainbow))
-			sleep(0.15)
+			sleep(0.1)
 
 
 def interpolate_color(rgb_start, rgb_target, progress):
