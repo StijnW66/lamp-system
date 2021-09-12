@@ -9,13 +9,18 @@ from database_connection.database_connection import DataBase
 
 database = DataBase()
 
-rgb = database.get_rgb_values()
+rgb_info = database.get_rgb_values()
+rgb = rgb_info[0]
+pattern = rgb_info[1]
 
 def update_loop():
     global rgb
+    global pattern
     i = 0
     while True:
-        rgb = database.get_rgb_values()
+        rgb_info = database.get_rgb_values()
+        rgb = rgb_info[0]
+        pattern = rgb_info[1]
         update_text_labels()
         print('updated', i)
         time.sleep(1)
@@ -23,12 +28,18 @@ def update_loop():
 
 def update_values(color, adjustment):
     global rgb
+    global pattern
     rgb[color] = 100 if (rgb[color] + adjustment > 100) else 0 if (rgb[color] + adjustment < 0) else rgb[color] + adjustment
-    rgb = database.update_rgb_values(rgb[0], rgb[1], rgb[2])
+    rgb_info = database.update_rgb_values(rgb[0], rgb[1], rgb[2], rgb[0]/10)
+    rgb = rgb_info[0]
+    pattern = rgb_info[1]
     update_text_labels()
 
 
 def update_text_labels():
+    for element in rgb:
+        print('element', element)
+
     scaled_rgb = [math.ceil(element * 2.55) for element in rgb]
     print(scaled_rgb)
     text_frame.configure(bg = "#%02x%02x%02x" % tuple(scaled_rgb))

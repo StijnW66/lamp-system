@@ -51,7 +51,7 @@ class DataBase():
 		print([output[0][1], output[0][2]])
 		return [output[0][1], output[0][2]]
 
-	def update_rgb_values(self, red=0, green=0, blue=0, pattern = 1, rgb_id=1):
+	def update_rgb_values(self, red=0, green=0, blue=0, pattern=0, rgb_id=1):
 		query = 'UPDATE rgb_values_pattern SET rgb = \'{{{}, {} ,{}}}\', pattern_id = {} WHERE rgb_id = {} RETURNING *'.format(red, green, blue, pattern, rgb_id)
 		output = self.execute_query(query)
 
