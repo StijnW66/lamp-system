@@ -3,12 +3,12 @@ from configparser import ConfigParser
 import time
 
 def config(filename='database_connection/database.ini', section='postgresql'):
-    # create a parser
+	# create a parser
 	parser = ConfigParser()
-    # read config file
+	# read config file
 	parser.read(filename)
 
-    # get section, default to postgresql
+	# get section, default to postgresql
 	db = {}
 	if parser.has_section(section):
 		params = parser.items(section)
@@ -20,10 +20,10 @@ def config(filename='database_connection/database.ini', section='postgresql'):
 	return db
 
 def setup_connection():
-    # read connection parameters
+	# read connection parameters
 	params = config()
 
-    # connect to the PostgreSQL server
+	# connect to the PostgreSQL server
 	connection = psycopg2.connect(**params)
 	return connection
 
@@ -64,6 +64,13 @@ class DataBase():
 		pattern = output[0][1]
 
 		return convert_pattern(pattern)
+
+	def get_total_patterns(self):
+		query = 'SELECT COUNT(*) FROM pattern;'
+		output = self.execute_query(query)
+
+		return output[0][0]
+
 
 def convert_pattern(pattern):
 	conv_pattern = []
