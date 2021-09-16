@@ -45,9 +45,17 @@ while database is None:
 print("connected", attempt_counter)
 sys.stdout.flush()
 
+# Increment pattern on startup
+rgb_info = database.get_rgb_values()
+rgb = rgb_info[0]
+pat = rgb_info[1]
+
+total_patterns = database.get_total_patterns() - 1
+next_pattern = (pat + 1) % total_patterns
+next_pattern = 1 if next_pattern == 0 else next_pattern
+database.update_rgb_values(rgb[0], rgb[1], rgb[2], next_pattern)
 
 current_pattern = 0
-
 def update_leds():
 	global current_pattern
 	rgb_info = database.get_rgb_values()
