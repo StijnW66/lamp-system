@@ -19,7 +19,7 @@ class PatternThread:
 	def start_pattern(self, pat):
 		global pattern
 		self.stop_flag = False
-
+		print("pattern: ", pat)
 		pattern = pat
 		self.thread = threading.Thread(target=self.advance_pattern, daemon=True)
 		self.thread.start()

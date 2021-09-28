@@ -1,76 +1,57 @@
-import psycopg2
-from configparser import ConfigParser
-import time
+import http.client
+import json
 
-def config(filename='database_connection/database.ini', section='postgresql'):
-	# create a parser
-	parser = ConfigParser()
-	# read config file
-	parser.read(filename)
+HOST = 'cryptic-earth-79580.herokuapp.com'
 
-	# get section, default to postgresql
-	db = {}
-	if parser.has_section(section):
-		params = parser.items(section)
-		for param in params:
-			db[param[0]] = param[1]
-	else:
-		raise Exception('Section {0} not found in the {1} file'.format(section, filename))
-
-	return db
-
-def setup_connection():
-	# read connection parameters
-	params = config()
-
-	# connect to the PostgreSQL server
-	connection = psycopg2.connect(**params)
-	return connection
-
-class DataBase():
+class ServerConnection():
 
 	def __init__(self):
-		self.connection = setup_connection()
+
+		self.connection = http.client.HTTPSConnection(HOST)
 
 
-	def execute_query(self, query):
-		cur = self.connection.cursor()
+	def get_rgb_values_http(self, rgb_id = 1):
+		path = '/rgb_values/' + str(rgb_id)
 
-		cur.execute(query)
-		output = cur.fetchall()
+		dict = self.execute_http_request("GET", path)
 
-		self.connection.commit()
-		cur.close()
+		return [dict['rgb'], dict['patternId']]
 
-		return output
+	def update_rgb_values_http(self, red=0, green=0, blue=0, pattern=0, rgb_id=1):
+		path = '/rgb_values/' + str(rgb_id)
+		headers = {'Content-type': 'application/json'}
 
-	def get_rgb_values(self, rgb_id=1):
-		query = 'SELECT * FROM rgb_values_pattern WHERE rgb_id = {}'.format(rgb_id)
-		output = self.execute_query(query)
+		content = {'rgb' : [red, green, blue], 'patternId': pattern}
+		json_data = json.dumps(content)
 
-		print([output[0][1], output[0][2]])
-		return [output[0][1], output[0][2]]
+		dict = self.execute_http_request("PATCH", path, json_data, headers)
+		return [dict['rgb'], dict['patternId']]
 
-	def update_rgb_values(self, red=0, green=0, blue=0, pattern=0, rgb_id=1):
-		query = 'UPDATE rgb_values_pattern SET rgb = \'{{{}, {} ,{}}}\', pattern_id = {} WHERE rgb_id = {} RETURNING *'.format(red, green, blue, pattern, rgb_id)
-		output = self.execute_query(query)
 
-		print([output[0][1], output[0][2]])
-		return [output[0][1], output[0][2]]
+	def get_pattern_http(self, pattern_id = 1):
+		path = '/pattern/' + str(pattern_id)
 
-	def get_pattern(self, pattern_id=1):
-		query = 'SELECT * FROM pattern Where pattern_id = {}'.format(pattern_id)
-		output = self.execute_query(query)
-		pattern = output[0][1]
+		dict = self.execute_http_request("GET", path)
 
-		return convert_pattern(pattern)
+		return convert_pattern(dict['patternContents'])
 
-	def get_total_patterns(self):
-		query = 'SELECT COUNT(*) FROM pattern;'
-		output = self.execute_query(query)
+	def get_total_patterns_http(self):
+		path = '/pattern/count'
+		dict = self.execute_http_request("GET",path)
+		return dict # This is just a number
 
-		return output[0][0]
 
+	def execute_http_request(self, method="GET", path="", json_data=None, headers=None):
+		print('executing: ' + method + " " + path)
+
+		if json_data is None:
+			self.connection.request(method, path)
+		else:
+			self.connection.request(method, path, json_data, headers)
+
+		response = self.connection.getresponse()
+
+		return json.loads(response.read())
 
 def convert_pattern(pattern):
 	conv_pattern = []

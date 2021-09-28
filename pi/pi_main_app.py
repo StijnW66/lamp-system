@@ -12,7 +12,7 @@ print("time =", now.strftime("%d/%m/%Y %H:%M:%S"))
 print("running")
 
 from pi.led_control.led_control import set_rgb
-from database_connection.database_connection import DataBase
+from database_connection.database_connection import ServerConnection
 from pi.led_control.pattern_control import PatternThread
 
 # Start a pattern while not connected to the database.
@@ -29,16 +29,16 @@ pattern = PatternThread()
 pattern.start_pattern(pat)
 
 # Try to connect to database. Timeout after 200 attempts.
-database = None
+server_connection = None
 attempt_counter = 0
 
-while database is None:
+while server_connection is None:
 	try:
-		database = DataBase()
+		server_connection = ServerConnection()
 	except:
 		if attempt_counter == 200:
 			exit()
-		database = None
+		server_connection = None
 		sleep(1)
 		attempt_counter += 1
 
@@ -46,25 +46,26 @@ print("connected", attempt_counter)
 sys.stdout.flush()
 
 # Increment pattern on startup
-rgb_info = database.get_rgb_values()
+rgb_info = server_connection.get_rgb_values_http()
 rgb = rgb_info[0]
 pat = rgb_info[1]
 
-total_patterns = database.get_total_patterns() - 1
+total_patterns = server_connection.get_total_patterns_http() + 1
 next_pattern = (pat + 1) % total_patterns
 next_pattern = 1 if next_pattern == 0 else next_pattern
-database.update_rgb_values(rgb[0], rgb[1], rgb[2], next_pattern)
+print("next:", next_pattern)
+server_connection.update_rgb_values_http(rgb[0], rgb[1], rgb[2], next_pattern)
 
 current_pattern = 0
 def update_leds():
 	global current_pattern
-	rgb_info = database.get_rgb_values()
+	rgb_info = server_connection.get_rgb_values_http()
 	rgb = rgb_info[0]
 	pat = rgb_info[1]
 	if not (pat == 0):
 		if not (pat == current_pattern):
 			pattern.stop_pattern()
-			pattern.start_pattern(database.get_pattern(pat))
+			pattern.start_pattern(server_connection.get_pattern_http(pat))
 			current_pattern = pat
 	else:
 		pattern.stop_pattern()
