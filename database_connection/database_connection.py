@@ -1,12 +1,13 @@
 import http.client
 import json
+import threading
 
 HOST = 'cryptic-earth-79580.herokuapp.com'
 
 class ServerConnection():
 
 	def __init__(self):
-
+		self.lock = threading.Lock()
 		self.connection = http.client.HTTPSConnection(HOST)
 
 
@@ -42,6 +43,7 @@ class ServerConnection():
 
 
 	def execute_http_request(self, method="GET", path="", json_data=None, headers=None):
+		self.lock.acquire()
 		print('executing: ' + method + " " + path)
 
 		if json_data is None:
@@ -51,7 +53,9 @@ class ServerConnection():
 
 		response = self.connection.getresponse()
 
-		return json.loads(response.read())
+		dict = json.loads(response.read())
+		self.lock.release()
+		return dict
 
 def convert_pattern(pattern):
 	conv_pattern = []

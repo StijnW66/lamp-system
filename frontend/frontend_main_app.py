@@ -5,11 +5,11 @@ import time
 import threading
 
 sys.path.append('.')
-from database_connection.database_connection import DataBase
+from database_connection.database_connection import ServerConnection
 
-database = DataBase()
+server_connection = ServerConnection()
 
-rgb_info = database.get_rgb_values()
+rgb_info = server_connection.get_rgb_values_http()
 rgb = rgb_info[0]
 pattern = rgb_info[1]
 
@@ -18,7 +18,7 @@ def update_loop():
     global pattern
     i = 0
     while True:
-        rgb_info = database.get_rgb_values()
+        rgb_info = server_connection.get_rgb_values_http()
         rgb = rgb_info[0]
         pattern = rgb_info[1]
         update_text_labels()
@@ -33,11 +33,11 @@ def update_values(color, adjustment):
         next_value = rgb[color] + adjustment
         rgb[color] = 100 if (next_value > 100) else 0 if (next_value < 0) else next_value
     else:
-        total_patterns = database.get_total_patterns() - 1
+        total_patterns = server_connection.get_total_patterns_http()
         next_pattern = pattern + adjustment
         pattern = 0 if (next_pattern < 0) else total_patterns if (next_pattern > total_patterns) else next_pattern
 
-    rgb_info = database.update_rgb_values(rgb[0], rgb[1], rgb[2], pattern)
+    rgb_info = server_connection.update_rgb_values_http(rgb[0], rgb[1], rgb[2], pattern)
     rgb = rgb_info[0]
     pattern = rgb_info[1]
     update_text_labels()
