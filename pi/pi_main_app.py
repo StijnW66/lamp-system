@@ -30,11 +30,14 @@ pattern.start_pattern(pat)
 
 # Try to connect to database. Timeout after 200 attempts.
 server_connection = None
+rgb_info = None
+
 attempt_counter = 0
 
 while server_connection is None:
 	try:
 		server_connection = ServerConnection()
+		rgb_info = server_connection.get_rgb_values_http()
 	except:
 		if attempt_counter == 200:
 			exit()
@@ -46,7 +49,6 @@ print("connected", attempt_counter)
 sys.stdout.flush()
 
 # Increment pattern on startup
-rgb_info = server_connection.get_rgb_values_http()
 rgb = rgb_info[0]
 pat = rgb_info[1]
 
