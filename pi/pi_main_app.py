@@ -56,12 +56,14 @@ total_patterns = server_connection.get_total_patterns_http() + 1
 next_pattern = (pat + 1) % total_patterns
 next_pattern = 1 if next_pattern == 0 else next_pattern
 print("next:", next_pattern)
-server_connection.update_rgb_values_http(rgb[0], rgb[1], rgb[2], next_pattern)
+rgb_info = server_connection.update_rgb_values_http(rgb[0], rgb[1], rgb[2], next_pattern)
 
 current_pattern = 0
-def update_leds():
+def update_leds(rgb_info):
 	global current_pattern
-	rgb_info = server_connection.get_rgb_values_http()
+	if(rgb_info is None):
+		return
+
 	rgb = rgb_info[0]
 	pat = rgb_info[1]
 	if not (pat == 0):
@@ -74,8 +76,11 @@ def update_leds():
 		current_pattern = 0
 		set_rgb(rgb)
 
+
+update_leds(rgb_info)
+
 while True:
 # Continuously poll database state to update the LEDs
-	update_leds()
-	sleep(1)
+	rgb_info = server_connection.get_rgb_values_update_http()
+	update_leds(rgb_info)
 
