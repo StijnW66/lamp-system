@@ -41,7 +41,6 @@ class PatternThread:
 			progress = interpolation_counter * (100/interpolate_duration)
 
 			rgb = interpolate_color(pattern[pattern_counter][0], pattern[(pattern_counter + 1) % len(pattern)][0], progress)
-			print(rgb)
 			set_rgb(rgb)
 
 

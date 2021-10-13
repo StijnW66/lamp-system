@@ -9,7 +9,6 @@ sys.path.append('.')
 now = datetime.now()
 
 print("time =", now.strftime("%d/%m/%Y %H:%M:%S"))
-print("running")
 
 from pi.led_control.led_control import set_rgb
 from database_connection.database_connection import ServerConnection
