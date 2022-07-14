@@ -10,9 +10,9 @@ now = datetime.now()
 
 print("time =", now.strftime("%d/%m/%Y %H:%M:%S"))
 
-from pi.led_control.led_control import set_rgb
-from database_connection.database_connection import ServerConnection
-from pi.led_control.pattern_control import PatternThread
+from src.pi.led_control.led_control import set_rgb
+from src.database_connection.database_connection import ServerConnection
+from src.pi.led_control.pattern_control import PatternThread
 
 # Start a pattern while not connected to the database.
 rainbow = [[[100, 0, 0], 50], [[100, 100, 0], 50], [[0, 100, 0], 50], [[0, 100, 100], 50], [[0, 0, 100], 50], [[100, 0, 100], 50]]
@@ -58,6 +58,7 @@ print("next:", next_pattern)
 rgb_info = server_connection.update_rgb_values_http(rgb[0], rgb[1], rgb[2], next_pattern)
 
 current_pattern = 0
+
 def update_leds(rgb_info):
 	global current_pattern
 	if(rgb_info is None):
