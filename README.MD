@@ -5,7 +5,7 @@ This project aims to schynchronize multiple rgb lights, which are located in rem
 ## Lamp Implementations
 Name | Image
 --- | ---
-[Esp32 + ws2812b LED strip](./Esp32/) | <img src="./Images/FlashMode.gif" width="300" />
+[Esp32 + ws2812b LED strip](./Esp32/) (Click for more GIFs!) | <img src="./Images/FlashMode.gif" width="300" />
 [Raspberry Pi + rgb-LED](./RaspberryPi/) | <img src="./Images/RaspberryPi.png" width="300" />
 
 ## Controller Implementations

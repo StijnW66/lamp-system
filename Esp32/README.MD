@@ -18,3 +18,10 @@ The Esp32 has two threads running. The first thead is responsible for establishi
 - [ModeManager.h](./src/Fastled/ModeManager.h) allows for memory efficient control over animation modes.
 - [Modes/](./src/Fastled/Modes/) is a folder containing the implementation of animation modes.
 - [OTA.h](./src/Fastled/OTA.h) allows for optional Over the Air Updates trough WiFi.
+
+## Additional GIFs
+
+<img src="../Images/FlashMode.gif" width="300" />
+<img src="../Images/DotShiftMode.gif" width="300" />
+<img src="../Images/MiddleShiftMode.gif" width="300" />
+<img src="../Images/TwinkleMode.gif" width="300" />
