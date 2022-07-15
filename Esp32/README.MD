@@ -1,3 +1,5 @@
+# Lamp-System -- Esp32 (ws2812b LED strip)
+
 :warning: This is an Arduino project. Open Fastled.ino in the Arduino IDE. Also add wifi credentials in [WiFiConnection.h](./src/Fastled/WiFiConnection.h)
 
 - This code is meant to be run on an Esp32 microcontroller. The Esp32 is fast, resourcefull, cheap, and capable of WiFi and Bluetooth connections, it is therefore an excellent fit for this project.

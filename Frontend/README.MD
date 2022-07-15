@@ -1,4 +1,4 @@
-Lamp-System -- Frontend
+# Lamp-System -- Frontend
 
 This Folder is a Desktop frontend made with the tkinter library. It uses functions defined in the DatabaseConnection folder in order to retreive and update the database.
 
