@@ -6,7 +6,7 @@ from operator import add
 
 sys.path.append('.')
 
-from src.pi.led_control.led_control import set_rgb
+from RaspberryPi.src.led_control.led_control import set_rgb
 
 pattern = []
 

@@ -10,9 +10,9 @@ now = datetime.now()
 
 print("time =", now.strftime("%d/%m/%Y %H:%M:%S"))
 
-from src.pi.led_control.led_control import set_rgb
-from src.database_connection.database_connection import ServerConnection
-from src.pi.led_control.pattern_control import PatternThread
+from RaspberryPi.src.led_control.led_control import set_rgb
+from DatabaseConnection.src.database_connection import ServerConnection
+from RaspberryPi.src.led_control.pattern_control import PatternThread
 
 # Start a pattern while not connected to the database.
 rainbow = [[[100, 0, 0], 50], [[100, 100, 0], 50], [[0, 100, 0], 50], [[0, 100, 100], 50], [[0, 0, 100], 50], [[100, 0, 100], 50]]

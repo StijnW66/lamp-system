@@ -5,7 +5,7 @@ import time
 import threading
 
 sys.path.append('.')
-from src.database_connection.database_connection import ServerConnection
+from DatabaseConnection.src.database_connection import ServerConnection
 
 server_connection = ServerConnection()
 
