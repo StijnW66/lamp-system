@@ -4,8 +4,8 @@
 
 
 
-const char* ssid     = "vdwater";
-const char* password = "Edna2014";
+const char* ssid     = "*******";
+const char* password = "*******";
 
 HTTPClient http;
 

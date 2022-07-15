@@ -3,12 +3,13 @@
 - The server uses the Spring Boot Framework and is hosted on Heroku.
 - The webserver is connected to a postgresql database, which is also hosted on Heroku.
 - Database updates should be communicated quickly, other applications should therefore poll continuously. This webserver implementation supports `long polling`, a request from a client is held and only receives a response when the database is updated (or when the timout is reached). This minimizes the network usage of the lamp-system, without compromizing the responsiveness.
+- The server can be run locally (port 8083) with gradle, using the `gradle bootrun` command from within the Server directory
+
 
 In the code there are two Objects defined:
 - [Pattern](src/main/java/com/lampsystem/lampsystem/Entities/Pattern.java), is an object for storing color patterns. The patterns are stored as an array of rgb values and duration.
 - [RgbValuesPattern](src/main/java/com/lampsystem/lampsystem/Entities/RgbValuesPattern.java), which stores the currently active pattern and the timestamp of the latest update.
 
-The server can be run locally (port 8083) with gradle, using the `gradle bootrun` command from within the Server directory
 
 The following HTTP endpoints are available:
 
