@@ -14,7 +14,7 @@ Name | Programming Language | Image
 [Raspberry Pi + rgb-LED](./RaspberryPi/) | Python | <img src="./Images/RaspberryPi.png" width="300" />
 
 ## Controller Implementations
-Name | Image
+Name | Programming Language | Image
 --- | --- | ---
 [Android App](./Android/) | Java (Android Development) | <img src="./Images/AndroidApp.jpeg" width="200" />
 [Desktop App](./Frontend/) | Python | <img src="./Images/DesktopApp.png" width="400" />
