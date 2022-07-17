@@ -9,12 +9,12 @@ Name | Programming Language
 
 ## Lamp Implementations
 Name | Programming Language | Image 
---- | ---
+--- | --- | ---
 [Esp32 + ws2812b LED strip](./Esp32/) (Click for more GIFs!) | C/C++ (Arduino Framework) | <img src="./Images/FlashMode.gif" width="300" />
 [Raspberry Pi + rgb-LED](./RaspberryPi/) | Python | <img src="./Images/RaspberryPi.png" width="300" />
 
 ## Controller Implementations
 Name | Image
---- | ---
+--- | --- | ---
 [Android App](./Android/) | Java (Android Development) | <img src="./Images/AndroidApp.jpeg" width="200" />
 [Desktop App](./Frontend/) | Python | <img src="./Images/DesktopApp.png" width="400" />
