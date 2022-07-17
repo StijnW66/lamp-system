@@ -1,5 +1,6 @@
 # Lamp-System -- Server
 
+- The server defines a RESTful API.
 - The server uses the Spring Boot Framework and is hosted on Heroku.
 - The webserver is connected to a postgresql database, which is also hosted on Heroku.
 - Database updates should be communicated quickly, other applications should therefore poll continuously. This webserver implementation supports `long polling`, a request from a client is held and only receives a response when the database is updated (or when the timeout is reached). This minimizes the network usage of the lamp-system, without compromizing the responsiveness.

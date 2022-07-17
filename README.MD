@@ -1,6 +1,6 @@
 # Lamp-System
 
-This project aims to schynchronize multiple rgb lights, which are located in remote places. To achieve this a centralized webserver is created. This webserver accepts HTTP requests from clients such as the lamp (Esp32/Raspberry Pi) or from a remote controller (Phone/Desktop app). Another usefull tool for interaction with the webserver is an API application like Postman.
+This project aims to schynchronize multiple rgb lights, which are located in remote places. To achieve this a centralized webserver is created. The webserver defines a RESTful API and accepts HTTP requests from clients such as the lamp (Esp32/Raspberry Pi) or from a remote controller (Phone/Desktop app). Another usefull tool for interaction with the webserver is an API application like Postman.
 
 Click on the Name of each component below for additional information.
 
